@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="./style.css">
+<script src="./app.js"></script>
+
+<div class="wrapper">
+	<p>セグメントの取得をSWでキャッチしたいがための動画</p>
+	<video
+		class="video"
+		id="video"
+		controls
+		playsinline
+		preload="auto"
+		src="https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_ts/master.m3u8"
+	></video>
+</div>
+
+<a href="./aaa">aタグのリンク</a>
+<button id="btn">JSでのfetch</button>
+
+<ul>
+	<li>aタグでの遷移時にはservice workerの'fetch'イベントハンドラが発火する</li>
+	<li>buttonでjsからjsonをfetchした場合には'fetch'イベントハンドラ発火しない😭</li>
+</ul>
