@@ -12,19 +12,16 @@ if ('serviceWorker' in navigator) {
 	}).catch(function(error) {
 	  console.log('Registration failed with ' + error);
 	});
+
+	navigator.serviceWorker.onmessage = function(messageEvent) {
+		console.log(`received data: ${messageEvent.data.msg}`);
+	  }
 }
 
 window.onload = () =>{
 	const btn = document.getElementById('btn');
 	btn.addEventListener('click', ()=>{
 		fetch('./test.json')
-			.then(response => response.json())
-			.then(data => console.log(data));
-	});
-
-	const btn2 = document.getElementById('btn2');
-	btn2.addEventListener('click', ()=>{
-		fetch('./test2.json')
 			.then(response => response.json())
 			.then(data => console.log(data));
 	});

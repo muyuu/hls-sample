@@ -10,11 +10,21 @@ self.addEventListener('fetch', function(event) {
 	console.log('WORKER: Fetching', event.request);
 
 	const url = event.request.url;
-	const isTarget = url.includes('test.json');
-	const targetUrl = url.replace('test.json', 'redirect.json');
-	const target = isTarget ? targetUrl : url;
 
-	event.respondWith(
-		fetch(target)
-	);
+	event.waitUntil(async function() {
+		if (!event.clientId) return;
+
+		const client = await clients.get(event.clientId);
+
+		if (!client) return;
+
+		if (url.match(/.+\.(json|m3u8|ts)/) === null) {
+			return;
+		}
+
+		client.postMessage({
+			msg: `intercept ${url}`,
+		});
+		
+	}());
 });
