@@ -21,4 +21,11 @@ window.onload = () =>{
 			.then(response => response.json())
 			.then(data => console.log(data));
 	});
+
+	const btn2 = document.getElementById('btn2');
+	btn2.addEventListener('click', ()=>{
+		fetch('./test2.json')
+			.then(response => response.json())
+			.then(data => console.log(data));
+	});
 };
