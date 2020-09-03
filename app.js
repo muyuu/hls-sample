@@ -43,15 +43,15 @@ window.onload = () =>{
 
 
 	video.textTracks.addEventListener('addtrack', (addTrackEvent) => {
+		const track = addTrackEvent.track;
+		if (track === null || track.kind !== 'metadata') {
+			return;
+		}
+		console.log(track);
+
 		const item = document.createElement('li');
 		item.innerText = 'fire addtrack event';
 		result.appendChild(item);
-
-		const track = addTrackEvent.track;
-		console.log(track);
-		if (track === null) {
-			return;
-		}
 
 		track.mode = 'hidden';
 		track.addEventListener('cuechange', onCueChange);
