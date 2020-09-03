@@ -19,10 +19,55 @@ if ('serviceWorker' in navigator) {
 }
 
 window.onload = () =>{
+	const video = document.getElementById('video');
+	const playlist = document.getElementById('playlist');
+	const playlistBtn = document.getElementById('changePlaylist');
+	const result = document.getElementById('result');
+
 	const btn = document.getElementById('btn');
 	btn.addEventListener('click', ()=>{
 		fetch('./test.json')
 			.then(response => response.json())
 			.then(data => console.log(data));
 	});
+	
+	
+	// input playlist
+	playlistBtn.addEventListener('click', (e)=> {
+		const txt = playlist.value;
+		video.setAttribute('src', txt);
+		console.log(`change playlist to ${txt}`);
+		video.load();
+		video.play();
+	});
+
+
+	video.textTracks.addEventListener('addtrack', (addTrackEvent) => {
+		const item = document.createElement('li');
+		item.innerText = 'fire addtrack event';
+		result.appendChild(item);
+
+		const track = addTrackEvent.track;
+		console.log(track);
+		if (track === null) {
+			return;
+		}
+
+		track.mode = 'hidden';
+		track.addEventListener('cuechange', onCueChange);
+		
+		function onCueChange(cueChangeEvent) {
+			const activeCue = cueChangeEvent.target.activeCues[0];
+			if (!activeCue) {
+			  return;
+			}
+			const data = activeCue.value.data.split('\t');
+			console.log('cuechange', data);
+			const item = document.createElement('li');
+			item.innerText = data.join(', ');
+			result.appendChild(item);
+		}
+	});
 };
+
+
